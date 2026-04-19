@@ -23,6 +23,20 @@ npm run dev
 npm run build
 ```
 
+## 本地模拟 Cloudflare Pages
+
+Cloudflare 官方本地开发命令是 `wrangler pages dev`。这个项目已经加了对应脚本：
+
+```bash
+npm run cf:preview
+```
+
+它会先执行 `npm run build`，再用 Wrangler 在本地启动接近 Cloudflare Pages 的预览环境，默认地址通常是：
+
+- `http://localhost:8788`
+
+这样可以更早发现 Cloudflare 侧的配置问题，而不是等线上构建时报错。
+
 Cloudflare Pages 可使用：
 
 - Build command: `npm run build`
