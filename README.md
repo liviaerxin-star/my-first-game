@@ -1,14 +1,17 @@
-# 人机下棋 Demo
+# Math Duel
 
-一个基于 `Vite + Phaser` 的单页静态网页 demo，先实现本地五子棋的人机对战。
+一个基于 `Vite + Phaser` 的单页静态网页教学沙盘，用来演示六角星数棋 `Math Duel`。
 
-目标：
+## 当前版本
 
-- 单页静态应用
+- 纯前端静态应用
 - 无后端
-- `npm run build` 产出 `dist`
+- 本地双人回合制
+- 星盘图结构，不使用方格棋盘
+- 支持 `移 / 邻 / 单跨 / 连跨`
+- 单跨与连跨自动生成四则运算证明
+- 支持“叫停”并按差和法结算
 - 可直接部署到 Cloudflare Pages
-- 当前规则为五子棋，后续可以替换成自定义规则
 
 ## 本地运行
 
@@ -17,46 +20,27 @@ npm install
 npm run dev
 ```
 
+## 测试
+
+```bash
+npm test
+```
+
 ## 打包
 
 ```bash
 npm run build
 ```
 
-## 本地模拟 Cloudflare Pages
-
-Cloudflare 官方本地开发命令是 `wrangler pages dev`。这个项目已经加了对应脚本：
-
-```bash
-npm run cf:preview
-```
-
-它会先执行 `npm run build`，再用 Wrangler 在本地启动接近 Cloudflare Pages 的预览环境，默认地址通常是：
-
-- `http://localhost:8788`
-
-这样可以更早发现 Cloudflare 侧的配置问题，而不是等线上构建时报错。
-
-Cloudflare Pages 可使用：
+Cloudflare Pages 构建参数：
 
 - Build command: `npm run build`
 - Build output directory: `dist`
 
-## 当前结构
+## 主要结构
 
-- `src/game/rules/gomoku-rules.js`: 五子棋规则与局面评估
-- `src/game/ai/minimax-agent.js`: Minimax + Alpha-Beta 剪枝
-- `src/game/rendering/gomoku-scene.js`: Phaser 棋盘渲染
-- `src/game/app-controller.js`: 页面 UI 与对局流程控制
-
-## 后续扩展
-
-如果你后面要定义自己的规则，优先替换或新增 `rules` 模块，让它提供：
-
-- 初始状态
-- 合法落子判断
-- 执行落子
-- 候选步生成
-- 局面评估
-
-这样 UI 和 Minimax 搜索层可以继续复用。
+- `src/game/math-duel/board-spec.js`: 六角星星盘节点图、阵营、固定编号
+- `src/game/math-duel/rules.js`: 状态机、合法步生成、叫停与结算
+- `src/game/math-duel/expression-solver.js`: 四则运算整数求解与证明去重
+- `src/game/rendering/math-duel-scene.js`: Phaser 星盘渲染与路径高亮
+- `src/game/app-controller.js`: 页面 UI、棋盘交互与信息面板同步
